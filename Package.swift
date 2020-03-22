@@ -21,8 +21,5 @@ let package = Package(
         .target(
             name: "AStack",
             dependencies: []),
-        .testTarget(
-            name: "AStackTests",
-            dependencies: ["AStack"]),
     ]
 )

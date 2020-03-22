@@ -8,10 +8,10 @@ public struct AHStack<Content>: View where Content: View {
   var content: () -> Content
 
   // Horizontal details.
-  var horizontalAlignment: HorizontalAlignment
+  var horizontalAlignment: VerticalAlignment
   var horizontalSpacing: CGFloat?
   // Vertical details.
-  var verticalAlignment: VerticalAlignment
+  var verticalAlignment: HorizontalAlignment
   var verticalSpacing: CGFloat?
 
   /// Creates an instance with the given horizontal and vertical spacing and
@@ -27,9 +27,9 @@ public struct AHStack<Content>: View where Content: View {
   ///   - vSpacing: the distance between adjacent children, or nil if the stack
   ///     should choose a default distance for each pair of children.
   public init(
-    hAlignment horizontalAlignment: HorizontalAlignment = .center,
+    hAlignment horizontalAlignment: VerticalAlignment = .center,
     hSpacing horizontalSpacing: CGFloat? = nil,
-    vAlignment verticalAlignment: VerticalAlignment = .center,
+    vAlignment verticalAlignment: HorizontalAlignment = .center,
     vSpacing verticalSpacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
@@ -44,8 +44,8 @@ public struct AHStack<Content>: View where Content: View {
     if sizeCategory.isAccessibility {
       return AnyView(
         VStack(
-          alignment: horizontalAlignment,
-          spacing: horizontalSpacing
+          alignment: verticalAlignment,
+          spacing: verticalSpacing
         ) {
           self.content()
         }
@@ -53,8 +53,8 @@ public struct AHStack<Content>: View where Content: View {
     } else {
       return AnyView(
         HStack(
-          alignment: verticalAlignment,
-          spacing: verticalSpacing
+          alignment: horizontalAlignment,
+          spacing: horizontalSpacing
         ) {
           self.content()
         }

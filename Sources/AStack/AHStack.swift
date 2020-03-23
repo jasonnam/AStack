@@ -5,27 +5,34 @@ import SwiftUI
 /// accessibility ones.
 public struct AHStack<Content>: View where Content: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+
+  /// A `View` that describes the purpose of the instance.
   var content: () -> Content
 
-  // Horizontal details.
+  /// `HStack` aligment.
   var horizontalStackAlignment: VerticalAlignment
+  /// `HStack` spacing.
   var horizontalStackSpacing: CGFloat?
-  // Vertical details.
+  /// `VStack` aligment.
   var verticalStackAlignment: HorizontalAlignment
+  /// `VStack` spacing.
   var verticalStackSpacing: CGFloat?
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - hAlignment: The guide that will have the same horizontal screen
-  ///     coordinate for all children.
-  ///   - hSpacing: The distance between adjacent children, or nil if the stack
-  ///     should choose a default distance for each pair of children.
-  ///   - vAlignment: The guide that will have the same horizontal screen
-  ///     coordinate for all children.
-  ///   - vSpacing: The distance between adjacent children, or nil if the stack
-  ///     should choose a default distance for each pair of children.
+  ///   - horizontalStackAlignment: The guide that will have the same horizontal
+  ///     screen coordinate for all children.
+  ///   - horizontalStackSpacing: The distance between adjacent children, or
+  ///     `nil` if the stack should choose a default distance for each pair of
+  ///     children.
+  ///   - verticalStackAlignment: The guide that will have the same horizontal
+  ///     screen coordinate for all children.
+  ///   - verticalStackSpacing: The distance between adjacent children, or `nil`
+  ///     if the stack should choose a default distance for each pair of
+  ///     children.
+  ///   - content: A `View` that describes the purpose of the instance.
   public init(
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,

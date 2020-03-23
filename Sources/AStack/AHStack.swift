@@ -8,35 +8,35 @@ public struct AHStack<Content>: View where Content: View {
   var content: () -> Content
 
   // Horizontal details.
-  var horizontalAlignment: VerticalAlignment
-  var horizontalSpacing: CGFloat?
+  var horizontalStackAlignment: VerticalAlignment
+  var horizontalStackSpacing: CGFloat?
   // Vertical details.
-  var verticalAlignment: HorizontalAlignment
-  var verticalSpacing: CGFloat?
+  var verticalStackAlignment: HorizontalAlignment
+  var verticalStackSpacing: CGFloat?
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - hAlignment: the guide that will have the same horizontal screen
+  ///   - hAlignment: The guide that will have the same horizontal screen
   ///     coordinate for all children.
-  ///   - hSpacing: the distance between adjacent children, or nil if the stack
+  ///   - hSpacing: The distance between adjacent children, or nil if the stack
   ///     should choose a default distance for each pair of children.
-  ///   - vAlignment: the guide that will have the same horizontal screen
+  ///   - vAlignment: The guide that will have the same horizontal screen
   ///     coordinate for all children.
-  ///   - vSpacing: the distance between adjacent children, or nil if the stack
+  ///   - vSpacing: The distance between adjacent children, or nil if the stack
   ///     should choose a default distance for each pair of children.
   public init(
-    hAlignment horizontalAlignment: VerticalAlignment = .center,
-    hSpacing horizontalSpacing: CGFloat? = nil,
-    vAlignment verticalAlignment: HorizontalAlignment = .center,
-    vSpacing verticalSpacing: CGFloat? = nil,
+    hAlignment horizontalStackAlignment: VerticalAlignment = .center,
+    hSpacing horizontalStackSpacing: CGFloat? = nil,
+    vAlignment verticalStackAlignment: HorizontalAlignment = .center,
+    vSpacing verticalStackSpacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
-    self.horizontalAlignment = horizontalAlignment
-    self.horizontalSpacing = horizontalSpacing
-    self.verticalAlignment = verticalAlignment
-    self.verticalSpacing = verticalSpacing
+    self.horizontalStackAlignment = horizontalStackAlignment
+    self.horizontalStackSpacing = horizontalStackSpacing
+    self.verticalStackAlignment = verticalStackAlignment
+    self.verticalStackSpacing = verticalStackSpacing
     self.content = content
   }
 
@@ -44,8 +44,8 @@ public struct AHStack<Content>: View where Content: View {
     if sizeCategory.isAccessibility {
       return AnyView(
         VStack(
-          alignment: verticalAlignment,
-          spacing: verticalSpacing
+          alignment: verticalStackAlignment,
+          spacing: verticalStackSpacing
         ) {
           self.content()
         }
@@ -53,8 +53,8 @@ public struct AHStack<Content>: View where Content: View {
     } else {
       return AnyView(
         HStack(
-          alignment: horizontalAlignment,
-          spacing: horizontalSpacing
+          alignment: horizontalStackAlignment,
+          spacing: horizontalStackSpacing
         ) {
           self.content()
         }

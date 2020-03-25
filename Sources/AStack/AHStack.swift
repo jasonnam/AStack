@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// Adaptive `HStack`.
+///
 /// A view that arranges its children in a horizontal line by default, and
 /// in a vertical line when the environment `sizeCategory` is among the
 /// accessibility ones.

@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// Adaptive `VStack`.
+///
 /// A view that arranges its children in a vertical line by default, and
 /// in a horizontal line when the environment `sizeCategory` is among the
 /// accessibility ones.

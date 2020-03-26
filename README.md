@@ -17,16 +17,69 @@ Welcome to **<ins>A</ins>Stack**, a library bringing you adaptive and accessible
 
 ## Introduction
  
-AStack brings two new SwiftUI views, `AHStack` and `AVStack`, a.k.a. <ins>A</ins>daptive/<ins>A</ins>ccessible `HStack` and `VStack`.  
+<ins>A</ins>Stack brings two new SwiftUI views, `AHStack` and `AVStack`, a.k.a. <ins>A</ins>daptive/<ins>A</ins>ccessible `HStack` and `VStack`.  
 
-Both views behavour is based on the [environment](https://developer.apple.com/documentation/swiftui/environment)'s [`ContentSizeCategory`](https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory):
+Both views behavior is based on the [environment](https://developer.apple.com/documentation/swiftui/environment)'s [`ContentSizeCategory`](https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory):
 
-- when the content size category is one that is **not** associated with accessibility, both views are alike the native counterpars.
+- when the content size category is one that is **not** associated with accessibility, both views are alike the native counterparts.
 - when the content size category is one that **is** associated with accessibility, the views switch alignment (e.g. from horizontal to vertical).
 
 ## Usage
 
 Use both `AHStack` and `AVStack` as any other stack view.
+
+```swift
+import AStack
+import SwiftUI
+
+struct ContentView: View {
+  var body: some View {
+    AHStack {
+      ...
+    }
+  }
+}
+
+
+struct ContentView2: View {
+  var body: some View {
+    AVStack {
+      ...
+    }
+  }
+}
+```
+
+By default both stacks follow the default alignment and spacing of `HStack` and `VStack`, however this can be customized:
+
+```swift
+import AStack
+import SwiftUI
+
+struct ContentView: View {
+  var body: some View {
+    AHStack(
+      hAlignment: .top,    // HStack alignment
+      vAlignment: .leading // VStack alignment
+    ) {
+      ...
+    }
+  }
+}
+
+
+struct ContentView2: View {
+  var body: some View {
+    AVStack(
+      vSpacing: 5, // VStack spacing
+      hSpacing: 10 // HStack spacing
+    ) {
+      ...
+    }
+  }
+}
+```
+## Examples
 
 ### AHStack
 
@@ -86,11 +139,11 @@ struct ContentView: View {
 
 ## Installation
 
-AStack is distributed using the [Swift Package Manager](https://swift.org/package-manager). To install it into a project, follow [this tutorial](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) and use this repository URL: `https://github.com/zntfdr/AStack.git`.
+<ins>A</ins>Stack is distributed using the [Swift Package Manager](https://swift.org/package-manager). To install it into a project, follow [this tutorial](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) and use this repository URL: `https://github.com/zntfdr/AStack.git`.
 
 ## Credits
 
-AStack was built by [Federico Zanetello](https://twitter.com/zntfdr) as a component of [Bangkok Metro](http://yourmetro.app).
+<ins>A</ins>Stack was built by [Federico Zanetello](https://twitter.com/zntfdr) as a component of [Bangkok Metro](http://yourmetro.app).
 
 ## Contributions and Support
 

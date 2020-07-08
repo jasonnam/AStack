@@ -49,25 +49,22 @@ public struct AVStack<Content>: View where Content: View {
     self.content = content
   }
 
+  @ViewBuilder
   public var body: some View {
     if sizeCategory.isAccessibility {
-      return AnyView(
-        HStack(
-          alignment: horizontalStackAlignment,
-          spacing: horizontalStackSpacing
-        ) {
-          self.content()
-        }
-      )
+      HStack(
+        alignment: horizontalStackAlignment,
+        spacing: horizontalStackSpacing
+      ) {
+        self.content()
+      }
     } else {
-      return AnyView(
-        VStack(
-          alignment: verticalStackAlignment,
-          spacing: verticalStackSpacing
-        ) {
-          self.content()
-        }
-      )
+      VStack(
+        alignment: verticalStackAlignment,
+        spacing: verticalStackSpacing
+      ) {
+        self.content()
+      }
     }
   }
 }

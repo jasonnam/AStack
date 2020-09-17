@@ -9,17 +9,21 @@ import SwiftUI
 public struct LazyAHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
 
-  /// A `View` that describes the purpose of the instance.
+  /// A view builder that creates the content of this stack.
   var content: () -> Content
 
-  /// `HStack` aligment.
+  /// `LazyHStack` aligment.
   var horizontalStackAlignment: VerticalAlignment
-  /// `HStack` spacing.
+  /// `LazyHStack` spacing.
   var horizontalStackSpacing: CGFloat?
-  /// `VStack` aligment.
+  /// `LazyHStack` pinned views.
+  var horizontalStackPinnedViews: PinnedScrollableViews
+  /// `LazyVStack` aligment.
   var verticalStackAlignment: HorizontalAlignment
-  /// `VStack` spacing.
+  /// `LazyVStack` spacing.
   var verticalStackSpacing: CGFloat?
+  /// `LazyVStack` pinned views.
+  var verticalStackPinnedViews: PinnedScrollableViews
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.
@@ -30,23 +34,31 @@ public struct LazyAHStack<Content: View>: View {
   ///   - horizontalStackSpacing: The distance between adjacent children, or
   ///     `nil` if the stack should choose a default distance for each pair of
   ///     children.
+  ///   - horizontalStackPinnedViews: The kinds of child views that will be
+  ///     pinned.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`
   ///     if the stack should choose a default distance for each pair of
   ///     children.
-  ///   - content: A `View` that describes the purpose of the instance.
+  ///   - verticalStackPinnedViews: The kinds of child views that will be
+  ///     pinned.
+  ///   - content: A view builder that creates the content of this stack.
   public init(
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
+    hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
+    vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
+    self.horizontalStackPinnedViews = horizontalStackPinnedViews
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
+    self.verticalStackPinnedViews = verticalStackPinnedViews
     self.content = content
   }
 
@@ -55,14 +67,16 @@ public struct LazyAHStack<Content: View>: View {
     if sizeCategory.isAccessibilityCategory {
       LazyVStack(
         alignment: verticalStackAlignment,
-        spacing: verticalStackSpacing
+        spacing: verticalStackSpacing,
+        pinnedViews: verticalStackPinnedViews
       ) {
         self.content()
       }
     } else {
       LazyHStack(
         alignment: horizontalStackAlignment,
-        spacing: horizontalStackSpacing
+        spacing: horizontalStackSpacing,
+        pinnedViews: horizontalStackPinnedViews
       ) {
         self.content()
       }

@@ -8,7 +8,7 @@ import SwiftUI
 public struct AHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
 
-  /// A `View` that describes the purpose of the instance.
+  /// A view builder that creates the content of this stack.
   var content: () -> Content
 
   /// `HStack` aligment.

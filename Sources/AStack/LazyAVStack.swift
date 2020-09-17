@@ -1,5 +1,7 @@
 import SwiftUI
 
+#if swift(>=5.3)
+
 /// Adaptive `LazyVStack`.
 ///
 /// A view that arranges its children in a line, creating items only as needed.
@@ -83,3 +85,5 @@ public struct LazyAVStack<Content: View>: View {
     }
   }
 }
+
+#endif

@@ -11,7 +11,7 @@ public struct LazyAHStack<Content: View>: View {
 
   /// A `View` that describes the purpose of the instance.
   var content: () -> Content
-  
+
   /// `HStack` aligment.
   var horizontalStackAlignment: VerticalAlignment
   /// `HStack` spacing.

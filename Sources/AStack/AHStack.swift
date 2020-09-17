@@ -5,7 +5,7 @@ import SwiftUI
 /// A view that arranges its children in a horizontal line by default, and
 /// in a vertical line when the environment `sizeCategory` is among the
 /// accessibility ones.
-public struct AHStack<Content>: View where Content: View {
+public struct AHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
 
   /// A `View` that describes the purpose of the instance.

@@ -13,20 +13,25 @@
     </a>
 </p>
 
-Welcome to **<ins>A</ins>Stack**, a library bringing you adaptive and accessible SwiftUI Stacks.
+Welcome to **<ins>A</ins>Stack**, a library bringing you adaptive and accessible SwiftUI stacks.
 
 ## Introduction
  
-<ins>A</ins>Stack brings two new SwiftUI views, `AHStack` and `AVStack`, a.k.a. <ins>A</ins>daptive/<ins>A</ins>ccessible `HStack` and `VStack`.  
+<ins>A</ins>Stack introduces four new SwiftUI views: 
 
-Both views behavior is based on the [environment](https://developer.apple.com/documentation/swiftui/environment)'s [`ContentSizeCategory`](https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory):
+- `AHStack`
+- `AVStack`
+- `LazyAHStack`
+- `LazyAVStack`
 
-- when the content size category is one that is **not** associated with accessibility, both views are alike the native counterparts.
+Their behavior is based on the [environment](https://developer.apple.com/documentation/swiftui/environment)'s [`ContentSizeCategory`](https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory):
+
+- when the content size category is one that is **not** associated with accessibility, they are equivalent to SwiftUI's counterparts
 - when the content size category is one that **is** associated with accessibility, the views switch alignment (e.g. from horizontal to vertical).
 
 ## Usage
 
-Use both `AHStack` and `AVStack` as any other stack view.
+Use any <ins>A</ins>Stack view as any other stack view:
 
 ```swift
 import AStack
@@ -40,17 +45,17 @@ struct ContentView: View {
   }
 }
 
-
+@available(macOS 11, iOS 14, watchOS 7, tvOS 14, *)
 struct ContentView2: View {
   var body: some View {
-    AVStack {
+    LazyAVStack {
       ...
     }
   }
 }
 ```
 
-By default both stacks follow the default alignment and spacing of `HStack` and `VStack`, however this can be customized:
+Properties such as alignment and spacing can be customized:
 
 ```swift
 import AStack
@@ -61,18 +66,6 @@ struct ContentView: View {
     AHStack(
       hAlignment: .top,    // HStack alignment
       vAlignment: .leading // VStack alignment
-    ) {
-      ...
-    }
-  }
-}
-
-
-struct ContentView2: View {
-  var body: some View {
-    AVStack(
-      vSpacing: 5, // VStack spacing
-      hSpacing: 10 // HStack spacing
     ) {
       ...
     }

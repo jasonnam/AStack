@@ -3,10 +3,11 @@ import SwiftUI
 /// Adaptive `VStack`.
 ///
 /// A view that arranges its children in a vertical line by default, and
-/// in a horizontal line when the environment `sizeCategory` is among the
-/// accessibility ones.
+/// in a horizontal line when:  the environment `sizeCategory` is among the
+/// accessibility ones OR when the `verticalSizeClass` is `.compact`
 public struct AVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @Environment(\.verticalSizeClass) var verticalSizeClass
 
   /// A view builder that creates the content of this stack.
   var content: () -> Content
@@ -51,7 +52,7 @@ public struct AVStack<Content: View>: View {
 
   @ViewBuilder
   public var body: some View {
-    if sizeCategory.isAccessibility {
+    if sizeCategory.isAccessibility || verticalSizeClass == .compact {
       HStack(
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing

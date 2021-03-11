@@ -6,10 +6,12 @@ import SwiftUI
 ///
 /// A view that arranges its children in a line, creating items only as needed.
 /// The line grows horizontally by default, and switches to vertical when the
-/// environment `sizeCategory` is among the accessibility ones.
+/// environment `sizeCategory` is among the accessibility ones OR
+/// when the `horizontalSizeClass` is `.compact`.
 @available(macOS 11, iOS 14, watchOS 7, tvOS 14, *)
 public struct LazyAHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+  @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
   /// A view builder that creates the content of this stack.
   var content: () -> Content
@@ -66,7 +68,7 @@ public struct LazyAHStack<Content: View>: View {
 
   @ViewBuilder
   public var body: some View {
-    if sizeCategory.isAccessibilityCategory {
+    if sizeCategory.isAccessibilityCategory || horizontalSizeClass == .compact {
       LazyVStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing,

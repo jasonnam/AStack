@@ -28,11 +28,14 @@ public struct LazyAHStack<Content: View>: View {
   var verticalStackSpacing: CGFloat?
   /// `LazyVStack` pinned views.
   var verticalStackPinnedViews: PinnedScrollableViews
+  /// What we're observing to decide if we should adapt.
+  var observing: AStackOptions
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.
   ///
   /// - Parameters:
+  ///   - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `horizontalSizeClass`, or both.
   ///   - horizontalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - horizontalStackSpacing: The distance between adjacent children, or
@@ -49,6 +52,7 @@ public struct LazyAHStack<Content: View>: View {
   ///     pinned.
   ///   - content: A view builder that creates the content of this stack.
   public init(
+    observing: AStackOptions = .horizontalSizeClass,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
@@ -57,6 +61,7 @@ public struct LazyAHStack<Content: View>: View {
     vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),
     @ViewBuilder content: @escaping () -> Content
   ) {
+    self.observing = observing
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
     self.horizontalStackPinnedViews = horizontalStackPinnedViews
@@ -65,10 +70,24 @@ public struct LazyAHStack<Content: View>: View {
     self.verticalStackPinnedViews = verticalStackPinnedViews
     self.content = content
   }
+  
+  var willAdapt: Bool {
+    switch observing {
+    case [.sizeCategory, .horizontalSizeClass]:
+      return sizeCategory.isAccessibility || horizontalSizeClass == .compact
+    case .sizeCategory:
+      return sizeCategory.isAccessibility
+    case .horizontalSizeClass:
+      return horizontalSizeClass == .compact
+    case []:
+      return false // Never adapt
+    default: fatalError() // should never happen
+    }
+  }
 
   @ViewBuilder
   public var body: some View {
-    if sizeCategory.isAccessibilityCategory || horizontalSizeClass == .compact {
+    if willAdapt {
       LazyVStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing,

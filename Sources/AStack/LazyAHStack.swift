@@ -52,7 +52,7 @@ public struct LazyAHStack<Content: View>: View {
   ///     pinned.
   ///   - content: A view builder that creates the content of this stack.
   public init(
-    observing: AStackOptions = .horizontalSizeClass,
+    observing: AStackOptions = .sizeClass,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
@@ -73,11 +73,11 @@ public struct LazyAHStack<Content: View>: View {
   
   var willAdapt: Bool {
     switch observing {
-    case [.sizeCategory, .horizontalSizeClass]:
+    case [.sizeCategory, .sizeClass]:
       return sizeCategory.isAccessibility || horizontalSizeClass == .compact
     case .sizeCategory:
       return sizeCategory.isAccessibility
-    case .horizontalSizeClass:
+    case .sizeClass:
       return horizontalSizeClass == .compact
     case []:
       return false // Never adapt

@@ -40,7 +40,7 @@ public struct AVStack<Content: View>: View {
   ///     children.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .verticalSizeClass,
+    observing: AStackOptions = .sizeClass,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
@@ -57,11 +57,11 @@ public struct AVStack<Content: View>: View {
   
   var willAdapt: Bool {
     switch observing {
-    case [.sizeCategory, .verticalSizeClass]:
+    case [.sizeCategory, .sizeClass]:
       return sizeCategory.isAccessibility || verticalSizeClass == .compact
     case .sizeCategory:
       return sizeCategory.isAccessibility
-    case .verticalSizeClass:
+    case .sizeClass:
       return verticalSizeClass == .compact
     case []:
       return false // Never adapt

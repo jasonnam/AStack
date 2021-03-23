@@ -40,7 +40,7 @@ public struct AHStack<Content: View>: View {
   ///     children.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .horizontalSizeClass,
+    observing: AStackOptions = .sizeCategory,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
@@ -57,11 +57,11 @@ public struct AHStack<Content: View>: View {
   
   var willAdapt: Bool {
     switch observing {
-    case [.sizeCategory, .horizontalSizeClass]:
+    case [.sizeCategory, .sizeClass]:
       return sizeCategory.isAccessibility || horizontalSizeClass == .compact
     case .sizeCategory:
       return sizeCategory.isAccessibility
-    case .horizontalSizeClass:
+    case .sizeClass:
       return horizontalSizeClass == .compact
     case []:
       return false // Never adapt

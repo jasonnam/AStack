@@ -2,11 +2,11 @@
 
 import SwiftUI
 
-/// These definitions are required as macOS, watchOS, tvOS don't have
-/// `horizontalSizeClass` and `verticalSizeClass` environment values.
-///
-/// As a workaround, we default their value to `.regular` (a.k.a. they won't
-/// trigger the stack to switch axis).
+// These definitions are required as macOS, watchOS, tvOS don't have
+// `horizontalSizeClass` and `verticalSizeClass` environment values.
+//
+// As a workaround, we default their value to `.regular` (a.k.a. they won't
+// trigger the stack to switch axis).
 
 #if os(macOS) || os(tvOS) || os(watchOS)
 enum UserInterfaceSizeClass {

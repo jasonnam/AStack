@@ -16,7 +16,7 @@ public struct AHStack<Content: View>: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
   /// What we're observing to decide if we should adapt.
-  let observing: AStackOptions
+  let observing: ObservingOptions
 
   /// `HStack` alignment.
   let horizontalStackAlignment: VerticalAlignment
@@ -51,7 +51,7 @@ public struct AHStack<Content: View>: View {
   ///     children.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .sizeCategory,
+    observing: ObservingOptions = .sizeCategory,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,

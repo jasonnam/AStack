@@ -20,7 +20,7 @@ public struct LazyAVStack<Content: View>: View {
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
   /// What we're observing to decide if we should adapt.
-  let observing: AStackOptions
+  let observing: ObservingOptions
 
   /// `LazyHStack` alignment.
   let horizontalStackAlignment: VerticalAlignment
@@ -65,7 +65,7 @@ public struct LazyAVStack<Content: View>: View {
   ///     pinned.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .sizeCategory,
+    observing: ObservingOptions = .sizeCategory,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),

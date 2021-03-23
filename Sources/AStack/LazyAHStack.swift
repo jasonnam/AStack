@@ -20,7 +20,7 @@ public struct LazyAHStack<Content: View>: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
   /// What we're observing to decide if we should adapt.
-  let observing: AStackOptions
+  let observing: ObservingOptions
 
   /// `LazyHStack` alignment.
   let horizontalStackAlignment: VerticalAlignment
@@ -65,7 +65,7 @@ public struct LazyAHStack<Content: View>: View {
   ///     pinned.
   ///   - content: A view builder that creates the content of this stack.
   public init(
-    observing: AStackOptions = .sizeCategory,
+    observing: ObservingOptions = .sizeCategory,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),

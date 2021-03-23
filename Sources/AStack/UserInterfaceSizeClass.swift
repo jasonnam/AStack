@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 
 // These definitions are required as macOS, watchOS, tvOS don't have

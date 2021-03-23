@@ -9,8 +9,8 @@ public struct AVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
-  /// A view builder that creates the content of this stack.
-  var content: () -> Content
+  /// The content of this stack.
+  var content: Content
 
   /// `HStack` alignment.
   var horizontalStackAlignment: VerticalAlignment
@@ -46,14 +46,14 @@ public struct AVStack<Content: View>: View {
     vSpacing verticalStackSpacing: CGFloat? = nil,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.observing = observing
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
-    self.content = content
+    self.content = content()
   }
   
   var willAdapt: Bool {
@@ -77,14 +77,14 @@ public struct AVStack<Content: View>: View {
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing
       ) {
-        self.content()
+        content
       }
     } else {
       VStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing
       ) {
-        self.content()
+        content
       }
     }
   }

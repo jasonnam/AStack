@@ -9,8 +9,8 @@ public struct AHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-  /// A view builder that creates the content of this stack.
-  var content: () -> Content
+  /// The content of this stack.
+  var content: Content
 
   /// `HStack` alignment.
   var horizontalStackAlignment: VerticalAlignment
@@ -46,14 +46,14 @@ public struct AHStack<Content: View>: View {
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.observing = observing
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
-    self.content = content
+    self.content = content()
   }
   
   var willAdapt: Bool {
@@ -77,14 +77,14 @@ public struct AHStack<Content: View>: View {
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing
       ) {
-        self.content()
+        content
       }
     } else {
       HStack(
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing
       ) {
-        self.content()
+        content
       }
     }
   }

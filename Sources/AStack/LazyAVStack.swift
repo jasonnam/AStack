@@ -13,8 +13,8 @@ public struct LazyAVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
-  /// A view builder that creates the content of this stack.
-  var content: () -> Content
+  /// The content of this stack.
+  var content: Content
 
   /// `LazyHStack` alignment.
   var horizontalStackAlignment: VerticalAlignment
@@ -60,7 +60,7 @@ public struct LazyAVStack<Content: View>: View {
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.observing = observing
     self.verticalStackAlignment = verticalStackAlignment
@@ -69,7 +69,7 @@ public struct LazyAVStack<Content: View>: View {
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
     self.horizontalStackPinnedViews = horizontalStackPinnedViews
-    self.content = content
+    self.content = content()
   }
   
   var willAdapt: Bool {
@@ -94,7 +94,7 @@ public struct LazyAVStack<Content: View>: View {
         spacing: horizontalStackSpacing,
         pinnedViews: horizontalStackPinnedViews
       ) {
-        self.content()
+        content
       }
     } else {
       LazyVStack(
@@ -102,7 +102,7 @@ public struct LazyAVStack<Content: View>: View {
         spacing: verticalStackSpacing,
         pinnedViews: verticalStackPinnedViews
       ) {
-        self.content()
+        content
       }
     }
   }

@@ -10,18 +10,18 @@ public struct AVStack<Content: View>: View {
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
   /// The content of this stack.
-  var content: Content
+  let content: Content
 
   /// `HStack` alignment.
-  var horizontalStackAlignment: VerticalAlignment
+  let horizontalStackAlignment: VerticalAlignment
   /// `HStack` spacing.
-  var horizontalStackSpacing: CGFloat?
+  let horizontalStackSpacing: CGFloat?
   /// `VStack` alignment.
-  var verticalStackAlignment: HorizontalAlignment
+  let verticalStackAlignment: HorizontalAlignment
   /// `VStack` spacing.
-  var verticalStackSpacing: CGFloat?
+  let verticalStackSpacing: CGFloat?
   /// What we're observing to decide if we should adapt.
-  var observing: AStackOptions
+  let observing: AStackOptions
 
   /// Creates an instance with the given vertical and horizontal spacing and
   /// axes alignment.

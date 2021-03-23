@@ -14,22 +14,22 @@ public struct LazyAHStack<Content: View>: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
   /// The content of this stack.
-  var content: Content
+  let content: Content
 
   /// `LazyHStack` alignment.
-  var horizontalStackAlignment: VerticalAlignment
+  let horizontalStackAlignment: VerticalAlignment
   /// `LazyHStack` spacing.
-  var horizontalStackSpacing: CGFloat?
+  let horizontalStackSpacing: CGFloat?
   /// `LazyHStack` pinned views.
-  var horizontalStackPinnedViews: PinnedScrollableViews
+  let horizontalStackPinnedViews: PinnedScrollableViews
   /// `LazyVStack` alignment.
-  var verticalStackAlignment: HorizontalAlignment
+  let verticalStackAlignment: HorizontalAlignment
   /// `LazyVStack` spacing.
-  var verticalStackSpacing: CGFloat?
+  let verticalStackSpacing: CGFloat?
   /// `LazyVStack` pinned views.
-  var verticalStackPinnedViews: PinnedScrollableViews
+  let verticalStackPinnedViews: PinnedScrollableViews
   /// What we're observing to decide if we should adapt.
-  var observing: AStackOptions
+  let observing: AStackOptions
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.

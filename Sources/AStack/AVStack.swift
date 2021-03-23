@@ -29,7 +29,7 @@ public struct AVStack<Content: View>: View {
 
   /// `VStack` spacing.
   let verticalStackSpacing: CGFloat?
-  
+
   /// The content of this stack.
   let content: Content
 

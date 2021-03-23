@@ -39,7 +39,7 @@ public struct LazyAHStack<Content: View>: View {
 
   /// `LazyVStack` pinned views.
   let verticalStackPinnedViews: PinnedScrollableViews
-  
+
   /// The content of this stack.
   let content: Content
 

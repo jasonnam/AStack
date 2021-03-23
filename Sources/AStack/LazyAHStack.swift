@@ -35,7 +35,8 @@ public struct LazyAHStack<Content: View>: View {
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `horizontalSizeClass`, or both.
+  ///   - observing: The @Environment values used to determine when we should
+  ///     adapt. Currently, either `sizeCategory`, `sizeClass`, or both.
   ///   - horizontalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - horizontalStackSpacing: The distance between adjacent children, or
@@ -52,7 +53,7 @@ public struct LazyAHStack<Content: View>: View {
   ///     pinned.
   ///   - content: A view builder that creates the content of this stack.
   public init(
-    observing: AStackOptions = .sizeClass,
+    observing: AStackOptions = .sizeCategory,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),

@@ -35,7 +35,8 @@ public struct LazyAVStack<Content: View>: View {
   /// axes alignment.
   ///
   /// - Parameters:
-  /// - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `verticalSizeClass`, or both.
+  ///   - observing: The @Environment values used to determine when we should
+  ///     adapt. Currently, either `sizeCategory`, `sizeClass`, or both.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`
@@ -52,7 +53,7 @@ public struct LazyAVStack<Content: View>: View {
   ///     pinned.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .sizeClass,
+    observing: AStackOptions = .sizeCategory,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),

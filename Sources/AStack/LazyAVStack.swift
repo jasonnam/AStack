@@ -6,10 +6,12 @@ import SwiftUI
 ///
 /// A view that arranges its children in a line, creating items only as needed.
 /// The line grows vertically by default, and switches to horizontal when the
-/// environment `sizeCategory` is among the accessibility ones.
+/// environment `sizeCategory` is among the accessibility ones OR
+/// when the `verticalSizeClass` is `.compact`.
 @available(macOS 11, iOS 14, watchOS 7, tvOS 14, *)
 public struct LazyAVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+  @Environment(\.verticalSizeClass) var verticalSizeClass
 
   /// A view builder that creates the content of this stack.
   var content: () -> Content
@@ -26,11 +28,14 @@ public struct LazyAVStack<Content: View>: View {
   var verticalStackSpacing: CGFloat?
   /// `LazyVStack` pinned views.
   var verticalStackPinnedViews: PinnedScrollableViews
+  /// What we're observing to decide if we should adapt.
+  var observing: AStackOptions
 
   /// Creates an instance with the given vertical and horizontal spacing and
   /// axes alignment.
   ///
   /// - Parameters:
+  /// - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `verticalSizeClass`, or both.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`
@@ -47,6 +52,7 @@ public struct LazyAVStack<Content: View>: View {
   ///     pinned.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
+    observing: AStackOptions = .verticalSizeClass,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),
@@ -55,6 +61,7 @@ public struct LazyAVStack<Content: View>: View {
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
     @ViewBuilder content: @escaping () -> Content
   ) {
+    self.observing = observing
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
     self.verticalStackPinnedViews = verticalStackPinnedViews
@@ -63,10 +70,24 @@ public struct LazyAVStack<Content: View>: View {
     self.horizontalStackPinnedViews = horizontalStackPinnedViews
     self.content = content
   }
+  
+  var willAdapt: Bool {
+    switch observing {
+    case [.sizeCategory, .verticalSizeClass]:
+      return sizeCategory.isAccessibility || verticalSizeClass == .compact
+    case .sizeCategory:
+      return sizeCategory.isAccessibility
+    case .verticalSizeClass:
+      return verticalSizeClass == .compact
+    case []:
+      return false // Never adapt
+    default: fatalError() // should never happen
+    }
+  }
 
   @ViewBuilder
   public var body: some View {
-    if sizeCategory.isAccessibility {
+    if willAdapt {
       LazyHStack(
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing,

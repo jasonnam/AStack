@@ -3,8 +3,14 @@ import SwiftUI
 /// Adaptive `VStack`.
 ///
 /// A view that arranges its children in a vertical line by default, and
-/// in a horizontal line when:  the environment `sizeCategory` is among the
-/// accessibility ones OR when the `verticalSizeClass` is `.compact`
+/// switches to horizontal based on the observed environment values:
+/// - if `.sizeCategory` is observed, the switch happens when its value is among
+///   the accessibility ones.
+/// - if `.sizeClass` is observed, the switch happens when the
+///   `verticalSizeClass` value is `.compact`.
+/// - if both are observed, the switch happens when at least one of the above is
+///   true.
+/// - if neither is observed, the switch never happens.
 public struct AVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass

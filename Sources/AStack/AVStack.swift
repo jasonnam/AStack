@@ -12,11 +12,11 @@ public struct AVStack<Content: View>: View {
   /// A view builder that creates the content of this stack.
   var content: () -> Content
 
-  /// `HStack` aligment.
+  /// `HStack` alignment.
   var horizontalStackAlignment: VerticalAlignment
   /// `HStack` spacing.
   var horizontalStackSpacing: CGFloat?
-  /// `VStack` aligment.
+  /// `VStack` alignment.
   var verticalStackAlignment: HorizontalAlignment
   /// `VStack` spacing.
   var verticalStackSpacing: CGFloat?

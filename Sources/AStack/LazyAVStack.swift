@@ -16,13 +16,13 @@ public struct LazyAVStack<Content: View>: View {
   /// A view builder that creates the content of this stack.
   var content: () -> Content
 
-  /// `LazyHStack` aligment.
+  /// `LazyHStack` alignment.
   var horizontalStackAlignment: VerticalAlignment
   /// `LazyHStack` spacing.
   var horizontalStackSpacing: CGFloat?
   /// `LazyHStack` pinned views.
   var horizontalStackPinnedViews: PinnedScrollableViews
-  /// `LazyVStack` aligment.
+  /// `LazyVStack` alignment.
   var verticalStackAlignment: HorizontalAlignment
   /// `LazyVStack` spacing.
   var verticalStackSpacing: CGFloat?

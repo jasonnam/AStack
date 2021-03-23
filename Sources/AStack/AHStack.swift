@@ -56,6 +56,7 @@ public struct AHStack<Content: View>: View {
     self.content = content()
   }
 
+  /// Whether this stack should switch axis (a.k.a 'adapt') or not.
   var shouldAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:

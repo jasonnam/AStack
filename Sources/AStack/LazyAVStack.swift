@@ -74,17 +74,8 @@ public struct LazyAVStack<Content: View>: View {
 
   /// Whether this stack should switch axis (a.k.a 'adapt') or not.
   var shouldAdapt: Bool {
-    switch observing {
-    case [.sizeCategory, .sizeClass]:
-      return sizeCategory.isAccessibility || verticalSizeClass == .compact
-    case .sizeCategory:
-      return sizeCategory.isAccessibility
-    case .sizeClass:
-      return verticalSizeClass == .compact
-    case []:
-      return false // Never adapt
-    default: fatalError() // should never happen
-    }
+    observing.contains(.sizeCategory) && sizeCategory.isAccessibility ||
+    observing.contains(.sizeClass) && verticalSizeClass == .compact
   }
 
   @ViewBuilder

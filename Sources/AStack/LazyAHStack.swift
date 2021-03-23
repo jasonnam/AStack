@@ -72,7 +72,7 @@ public struct LazyAHStack<Content: View>: View {
     self.content = content()
   }
 
-  var willAdapt: Bool {
+  var shouldAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:
       return sizeCategory.isAccessibility || horizontalSizeClass == .compact
@@ -88,7 +88,7 @@ public struct LazyAHStack<Content: View>: View {
 
   @ViewBuilder
   public var body: some View {
-    if willAdapt {
+    if shouldAdapt {
       LazyVStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing,

@@ -56,7 +56,7 @@ public struct AVStack<Content: View>: View {
     self.content = content()
   }
 
-  var willAdapt: Bool {
+  var shouldAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:
       return sizeCategory.isAccessibility || verticalSizeClass == .compact
@@ -72,7 +72,7 @@ public struct AVStack<Content: View>: View {
 
   @ViewBuilder
   public var body: some View {
-    if willAdapt {
+    if shouldAdapt {
       HStack(
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing

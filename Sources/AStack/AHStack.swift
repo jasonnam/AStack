@@ -55,7 +55,7 @@ public struct AHStack<Content: View>: View {
     self.verticalStackSpacing = verticalStackSpacing
     self.content = content()
   }
-  
+
   var willAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:
@@ -89,5 +89,3 @@ public struct AHStack<Content: View>: View {
     }
   }
 }
-
-

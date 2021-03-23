@@ -71,7 +71,7 @@ public struct LazyAVStack<Content: View>: View {
     self.horizontalStackPinnedViews = horizontalStackPinnedViews
     self.content = content()
   }
-  
+
   var willAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:

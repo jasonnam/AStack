@@ -71,7 +71,7 @@ public struct LazyAHStack<Content: View>: View {
     self.verticalStackPinnedViews = verticalStackPinnedViews
     self.content = content()
   }
-  
+
   var willAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:

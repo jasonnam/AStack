@@ -55,7 +55,7 @@ public struct AVStack<Content: View>: View {
     self.horizontalStackSpacing = horizontalStackSpacing
     self.content = content()
   }
-  
+
   var willAdapt: Bool {
     switch observing {
     case [.sizeCategory, .sizeClass]:

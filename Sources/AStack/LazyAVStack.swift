@@ -13,23 +13,29 @@ public struct LazyAVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
-  /// The content of this stack.
-  let content: Content
+  /// What we're observing to decide if we should adapt.
+  let observing: AStackOptions
 
   /// `LazyHStack` alignment.
   let horizontalStackAlignment: VerticalAlignment
+
   /// `LazyHStack` spacing.
   let horizontalStackSpacing: CGFloat?
+
   /// `LazyHStack` pinned views.
   let horizontalStackPinnedViews: PinnedScrollableViews
+
   /// `LazyVStack` alignment.
   let verticalStackAlignment: HorizontalAlignment
+
   /// `LazyVStack` spacing.
   let verticalStackSpacing: CGFloat?
+
   /// `LazyVStack` pinned views.
   let verticalStackPinnedViews: PinnedScrollableViews
-  /// What we're observing to decide if we should adapt.
-  let observing: AStackOptions
+
+  /// The content of this stack.
+  let content: Content
 
   /// Creates an instance with the given vertical and horizontal spacing and
   /// axes alignment.

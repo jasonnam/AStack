@@ -9,19 +9,23 @@ public struct AHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-  /// The content of this stack.
-  let content: Content
+  /// What we're observing to decide if we should adapt.
+  let observing: AStackOptions
 
   /// `HStack` alignment.
   let horizontalStackAlignment: VerticalAlignment
+
   /// `HStack` spacing.
   let horizontalStackSpacing: CGFloat?
+
   /// `VStack` alignment.
   let verticalStackAlignment: HorizontalAlignment
+
   /// `VStack` spacing.
   let verticalStackSpacing: CGFloat?
-  /// What we're observing to decide if we should adapt.
-  let observing: AStackOptions
+
+  /// The content of this stack.
+  let content: Content
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.

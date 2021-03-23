@@ -42,7 +42,7 @@ public struct LazyAHStack<Content: View>: View {
   ///
   /// - Parameters:
   ///   - observing: The @Environment values used to determine when we should
-  ///     adapt. Currently, either `sizeCategory`, `sizeClass`, or both.
+  ///     adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - horizontalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - horizontalStackSpacing: The distance between adjacent children, or

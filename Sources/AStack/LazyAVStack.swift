@@ -42,7 +42,7 @@ public struct LazyAVStack<Content: View>: View {
   ///
   /// - Parameters:
   ///   - observing: The @Environment values used to determine when we should
-  ///     adapt. Currently, either `sizeCategory`, `sizeClass`, or both.
+  ///     adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`

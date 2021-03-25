@@ -24,10 +24,14 @@ Welcome to **<ins>A</ins>Stack**, a library bringing you adaptive and accessible
 - `LazyAHStack`
 - `LazyAVStack`
 
-Their behavior is based on the [environment](https://developer.apple.com/documentation/swiftui/environment)'s [`ContentSizeCategory`](https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory):
+Their behavior is based on the [environment][environment]'s [`ContentSizeCategory`][ContentSizeCategory] and/or [`UserInterfaceSizeClass`][UserInterfaceSizeClass]:
 
-- when the content size category is one that is **not** associated with accessibility, they are equivalent to SwiftUI's counterparts
-- when the content size category is one that **is** associated with accessibility, the views switch alignment (e.g. from horizontal to vertical).
+- when the **content size** category is one that is **not** associated with accessibility, they are equivalent to SwiftUI's counterparts
+- when the **content size** category is one that **is** associated with accessibility, the views switch alignment (e.g. from horizontal to vertical)
+- when the associated **class size** is `.regular`, they are equivalent to SwiftUI's counterparts
+- when the associated **class size** is `.compact`, the views switch alignment (e.g. from horizontal to vertical)
+
+By default all views observe just `ContentSizeCategory`, however this can be changed to observing either `ContentSizeCategory` or  `UserInterfaceSizeClass`, both, or none via the `observing` parameter.
 
 ## Usage
 
@@ -145,3 +149,7 @@ All users are welcome and encouraged to become active participants in the projec
 If you'd like to make a change, please [open a Pull Request](https://github.com/zntfdr/AStack/pull/new), even if it just contains a draft of the changes you’re planning, or a test that reproduces an issue.
 
 Thank you and please enjoy using **<ins>A</ins>Stack**!
+
+[ContentSizeCategory]: https://developer.apple.com/documentation/swiftui/environmentvalues/3284540-sizecategory
+[Environment]: https://developer.apple.com/documentation/swiftui/environment
+[UserInterfaceSizeClass]: https://developer.apple.com/documentation/swiftui/userinterfacesizeclass

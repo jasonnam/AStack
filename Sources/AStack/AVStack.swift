@@ -3,31 +3,42 @@ import SwiftUI
 /// Adaptive `VStack`.
 ///
 /// A view that arranges its children in a vertical line by default, and
-/// in a horizontal line when:  the environment `sizeCategory` is among the
-/// accessibility ones OR when the `verticalSizeClass` is `.compact`
+/// switches to horizontal based on the observed environment values:
+/// - if `.sizeCategory` is observed, the switch happens when its value is among
+///   the accessibility ones.
+/// - if `.sizeClass` is observed, the switch happens when the
+///   `verticalSizeClass` value is `.compact`.
+/// - if both are observed, the switch happens when at least one of the above is
+///   true.
+/// - if neither is observed, the switch never happens.
 public struct AVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
-  /// A view builder that creates the content of this stack.
-  var content: () -> Content
+  /// What the view observes to decide when to adapt.
+  let observing: ObservingOptions
 
-  /// `HStack` aligment.
-  var horizontalStackAlignment: VerticalAlignment
+  /// `HStack` alignment.
+  let horizontalStackAlignment: VerticalAlignment
+
   /// `HStack` spacing.
-  var horizontalStackSpacing: CGFloat?
-  /// `VStack` aligment.
-  var verticalStackAlignment: HorizontalAlignment
+  let horizontalStackSpacing: CGFloat?
+
+  /// `VStack` alignment.
+  let verticalStackAlignment: HorizontalAlignment
+
   /// `VStack` spacing.
-  var verticalStackSpacing: CGFloat?
-  /// What we're observing to decide if we should adapt.
-  var observing: AStackOptions
+  let verticalStackSpacing: CGFloat?
+
+  /// The content of this stack.
+  let content: Content
 
   /// Creates an instance with the given vertical and horizontal spacing and
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `verticalSizeClass`, or both.
+  ///   - observing: The @Environment values used to determine when the view
+  ///     should adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`
@@ -40,50 +51,42 @@ public struct AVStack<Content: View>: View {
   ///     children.
   ///   - content: A `View` that describes the purpose of the instance.
   public init(
-    observing: AStackOptions = .verticalSizeClass,
+    observing: ObservingOptions = .sizeCategory,
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.observing = observing
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
     self.horizontalStackAlignment = horizontalStackAlignment
     self.horizontalStackSpacing = horizontalStackSpacing
-    self.content = content
+    self.content = content()
   }
-  
-  var willAdapt: Bool {
-    switch observing {
-    case [.sizeCategory, .verticalSizeClass]:
-      return sizeCategory.isAccessibility || verticalSizeClass == .compact
-    case .sizeCategory:
-      return sizeCategory.isAccessibility
-    case .verticalSizeClass:
-      return verticalSizeClass == .compact
-    case []:
-      return false // Never adapt
-    default: fatalError() // should never happen
-    }
+
+  /// Whether this stack should switch axis (a.k.a 'adapt') or not.
+  var shouldAdapt: Bool {
+    observing.contains(.sizeCategory) && sizeCategory.isAccessibility ||
+    observing.contains(.sizeClass) && verticalSizeClass == .compact
   }
 
   @ViewBuilder
   public var body: some View {
-    if willAdapt {
+    if shouldAdapt {
       HStack(
         alignment: horizontalStackAlignment,
         spacing: horizontalStackSpacing
       ) {
-        self.content()
+        content
       }
     } else {
       VStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing
       ) {
-        self.content()
+        content
       }
     }
   }

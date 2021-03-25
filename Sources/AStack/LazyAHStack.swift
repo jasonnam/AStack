@@ -5,37 +5,50 @@ import SwiftUI
 /// Adaptive `LazyHStack`.
 ///
 /// A view that arranges its children in a line, creating items only as needed.
-/// The line grows horizontally by default, and switches to vertical when the
-/// environment `sizeCategory` is among the accessibility ones OR
-/// when the `horizontalSizeClass` is `.compact`.
+/// The line grows horizontally by default, and switches to vertical based on
+/// the observed environment values:
+/// - if `.sizeCategory` is observed, the switch happens when its value is among
+///   the accessibility ones.
+/// - if `.sizeClass` is observed, the switch happens when the
+///   `horizontalSizeClass` value is `.compact`.
+/// - if both are observed, the switch happens when at least one of the above is
+///   true.
+/// - if neither is observed, the switch never happens.
 @available(macOS 11, iOS 14, watchOS 7, tvOS 14, *)
 public struct LazyAHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-  /// A view builder that creates the content of this stack.
-  var content: () -> Content
+  /// What the view observes to decide when to adapt.
+  let observing: ObservingOptions
 
-  /// `LazyHStack` aligment.
-  var horizontalStackAlignment: VerticalAlignment
+  /// `LazyHStack` alignment.
+  let horizontalStackAlignment: VerticalAlignment
+
   /// `LazyHStack` spacing.
-  var horizontalStackSpacing: CGFloat?
+  let horizontalStackSpacing: CGFloat?
+
   /// `LazyHStack` pinned views.
-  var horizontalStackPinnedViews: PinnedScrollableViews
-  /// `LazyVStack` aligment.
-  var verticalStackAlignment: HorizontalAlignment
+  let horizontalStackPinnedViews: PinnedScrollableViews
+
+  /// `LazyVStack` alignment.
+  let verticalStackAlignment: HorizontalAlignment
+
   /// `LazyVStack` spacing.
-  var verticalStackSpacing: CGFloat?
+  let verticalStackSpacing: CGFloat?
+
   /// `LazyVStack` pinned views.
-  var verticalStackPinnedViews: PinnedScrollableViews
-  /// What we're observing to decide if we should adapt.
-  var observing: AStackOptions
+  let verticalStackPinnedViews: PinnedScrollableViews
+
+  /// The content of this stack.
+  let content: Content
 
   /// Creates an instance with the given horizontal and vertical spacing and
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - observing: The @Environment value that we are observing to determine if we should adapt. Currently, either the `sizeCategory`, `horizontalSizeClass`, or both.
+  ///   - observing: The @Environment values used to determine when the view
+  ///     should adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - horizontalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - horizontalStackSpacing: The distance between adjacent children, or
@@ -52,14 +65,14 @@ public struct LazyAHStack<Content: View>: View {
   ///     pinned.
   ///   - content: A view builder that creates the content of this stack.
   public init(
-    observing: AStackOptions = .horizontalSizeClass,
+    observing: ObservingOptions = .sizeCategory,
     hAlignment horizontalStackAlignment: VerticalAlignment = .center,
     hSpacing horizontalStackSpacing: CGFloat? = nil,
     hPinnedViews horizontalStackPinnedViews: PinnedScrollableViews = .init(),
     vAlignment verticalStackAlignment: HorizontalAlignment = .center,
     vSpacing verticalStackSpacing: CGFloat? = nil,
     vPinnedViews verticalStackPinnedViews: PinnedScrollableViews = .init(),
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.observing = observing
     self.horizontalStackAlignment = horizontalStackAlignment
@@ -68,32 +81,24 @@ public struct LazyAHStack<Content: View>: View {
     self.verticalStackAlignment = verticalStackAlignment
     self.verticalStackSpacing = verticalStackSpacing
     self.verticalStackPinnedViews = verticalStackPinnedViews
-    self.content = content
+    self.content = content()
   }
-  
-  var willAdapt: Bool {
-    switch observing {
-    case [.sizeCategory, .horizontalSizeClass]:
-      return sizeCategory.isAccessibility || horizontalSizeClass == .compact
-    case .sizeCategory:
-      return sizeCategory.isAccessibility
-    case .horizontalSizeClass:
-      return horizontalSizeClass == .compact
-    case []:
-      return false // Never adapt
-    default: fatalError() // should never happen
-    }
+
+  /// Whether this stack should switch axis (a.k.a 'adapt') or not.
+  var shouldAdapt: Bool {
+    observing.contains(.sizeCategory) && sizeCategory.isAccessibility ||
+    observing.contains(.sizeClass) && horizontalSizeClass == .compact
   }
 
   @ViewBuilder
   public var body: some View {
-    if willAdapt {
+    if shouldAdapt {
       LazyVStack(
         alignment: verticalStackAlignment,
         spacing: verticalStackSpacing,
         pinnedViews: verticalStackPinnedViews
       ) {
-        self.content()
+        content
       }
     } else {
       LazyHStack(
@@ -101,7 +106,7 @@ public struct LazyAHStack<Content: View>: View {
         spacing: horizontalStackSpacing,
         pinnedViews: horizontalStackPinnedViews
       ) {
-        self.content()
+        content
       }
     }
   }

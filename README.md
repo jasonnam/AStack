@@ -31,7 +31,7 @@ Their behavior is based on the [environment][environment]'s [`ContentSizeCategor
 - when the associated **class size** is `.regular`, they are equivalent to SwiftUI's counterparts
 - when the associated **class size** is `.compact`, the views switch alignment (e.g. from horizontal to vertical)
 
-By default all views observe to only the `ContentSizeCategory`, however this can be changed in observing either `ContentSizeCategory` or  `UserInterfaceSizeClass`, both, or none via the `observing` `OptionSet` parameter.
+By default all views observe just `ContentSizeCategory`, however this can be changed to observing either `ContentSizeCategory` or  `UserInterfaceSizeClass`, both, or none via the `observing` parameter.
 
 ## Usage
 

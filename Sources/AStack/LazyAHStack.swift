@@ -19,7 +19,7 @@ public struct LazyAHStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-  /// What we're observing to decide if we should adapt.
+  /// What the view observes to decide when to adapt.
   let observing: ObservingOptions
 
   /// `LazyHStack` alignment.
@@ -47,8 +47,8 @@ public struct LazyAHStack<Content: View>: View {
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - observing: The @Environment values used to determine when we should
-  ///     adapt. Currently `sizeCategory` and/or `sizeClass`.
+  ///   - observing: The @Environment values used to determine when the view
+  ///     should adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - horizontalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - horizontalStackSpacing: The distance between adjacent children, or

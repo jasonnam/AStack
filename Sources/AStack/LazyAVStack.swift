@@ -19,7 +19,7 @@ public struct LazyAVStack<Content: View>: View {
   @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
   @Environment(\.verticalSizeClass) var verticalSizeClass
 
-  /// What we're observing to decide if we should adapt.
+  /// What the view observes to decide when to adapt.
   let observing: ObservingOptions
 
   /// `LazyHStack` alignment.
@@ -47,8 +47,8 @@ public struct LazyAVStack<Content: View>: View {
   /// axes alignment.
   ///
   /// - Parameters:
-  ///   - observing: The @Environment values used to determine when we should
-  ///     adapt. Currently `sizeCategory` and/or `sizeClass`.
+  ///   - observing: The @Environment values used to determine when the view
+  ///     should adapt. Currently `sizeCategory` and/or `sizeClass`.
   ///   - verticalStackAlignment: The guide that will have the same horizontal
   ///     screen coordinate for all children.
   ///   - verticalStackSpacing: The distance between adjacent children, or `nil`

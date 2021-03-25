@@ -4,7 +4,7 @@ import Foundation
 public struct ObservingOptions: OptionSet {
   public let rawValue: Int
 
-  /// Initializes a Observing-options object.
+  /// Initializes an `ObservingOptions` object.
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }
